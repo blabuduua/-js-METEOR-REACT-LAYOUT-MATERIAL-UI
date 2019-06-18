@@ -1,0 +1,31 @@
+[{
+    "id": 1,
+    "title": "React Meteor Book 1",
+    "price": 12.99,
+    "inventory": 2,
+    "department": "books"
+  },  {
+      "id": 2,
+      "title": "React Meteor Book 2",
+      "price": 14.99,
+      "inventory": 10,
+      "department": "books"
+  },  {
+      "id": 3,
+      "title": "React Meteor Book 3",
+      "price": 18.99,
+      "inventory": 5,
+      "department": "books"
+  },  {
+      "id": 4,
+      "title": "Meteor React Music 1",
+      "price": 22.99,
+      "inventory": 45,
+      "department": "music"
+  },  {
+      "id": 5,
+      "title": "Meteor React Music 2",
+      "price": 32.99,
+      "inventory": 100,
+      "department": "music"
+    }]
