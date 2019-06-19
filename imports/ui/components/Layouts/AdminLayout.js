@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {AddShoppingCart, ExpandLess, ExpandMore, LibraryBooks, LibraryMusic, ShoppingCart} from "@material-ui/icons";
+import {AddShoppingCartOutlined, ExpandLess, ExpandMore, LibraryBooksOutlined, LibraryMusicOutlined, ShoppingCartOutlined} from "@material-ui/icons";
 import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -81,15 +81,15 @@ function ResponsiveDrawer(props) {
                 component="nav"
                 className={classes.nav}
             >
-                <ListItem button component={Link} to="/cart" selected={'/' === pathname}>
+                <ListItem button component={Link} to="/cart" selected={'/cart' === pathname}>
                     <ListItemIcon>
-                        <ShoppingCart />
+                        <ShoppingCartOutlined />
                     </ListItemIcon>
                     <ListItemText primary="Cart" />
                 </ListItem>
                 <ListItem button onClick={handleClick}>
                     <ListItemIcon>
-                        <AddShoppingCart />
+                        <AddShoppingCartOutlined />
                     </ListItemIcon>
                     <ListItemText primary="Products" />
                     {open ? <ExpandLess /> : <ExpandMore />}
@@ -98,13 +98,13 @@ function ResponsiveDrawer(props) {
                     <List component="div" disablePadding>
                         <ListItem button component={Link} to="/books" selected={'/books' === pathname} className={classes.nested}>
                             <ListItemIcon>
-                                <LibraryBooks />
+                                <LibraryBooksOutlined />
                             </ListItemIcon>
                             <ListItemText primary="Books" />
                         </ListItem>
                         <ListItem button component={Link} to="/music" selected={'/music' === pathname} className={classes.nested}>
                             <ListItemIcon>
-                                <LibraryMusic />
+                                <LibraryMusicOutlined />
                             </ListItemIcon>
                             <ListItemText primary="Music" />
                         </ListItem>
@@ -118,7 +118,7 @@ function ResponsiveDrawer(props) {
         <Fragment>
             <div className={classes.root}>
                 <CssBaseline />
-                <AppBar position="fixed" className={classes.appBar}>
+                <AppBar position="fixed" color="primary" className={classes.appBar}>
                     <Toolbar>
                         <IconButton
                             color="inherit"
