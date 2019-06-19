@@ -1,22 +1,22 @@
 import React, { Fragment } from 'react';
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import MenuList from "@material-ui/core/MenuList";
-import MenuItem from "@material-ui/core/MenuItem";
+import {AddShoppingCart, ExpandLess, ExpandMore, LibraryBooks, LibraryMusic, ShoppingCart} from "@material-ui/icons";
+import Collapse from "@material-ui/core/Collapse";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import { compose } from "recompose";
 
 const drawerWidth = 240;
 
@@ -47,16 +47,29 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    nested: {
+        paddingLeft: theme.spacing(4),
+    },
+    nav: {
+        width: '100%',
+        maxWidth: 360,
+        backgroundColor: theme.palette.background.paper,
+    },
 }));
 
-export default function ResponsiveDrawer(props) {
-    const { container, children } = props;
+function ResponsiveDrawer(props) {
+    const { container, children, location: {pathname} } = props;
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     function handleDrawerToggle() {
         setMobileOpen(!mobileOpen);
+    }
+
+    function handleClick() {
+        setOpen(!open);
     }
 
     const drawer = (
@@ -64,14 +77,40 @@ export default function ResponsiveDrawer(props) {
             <Hidden xsDown implementation="css">
                 <div className={classes.toolbar} />
             </Hidden>
-            <MenuList>
-                <MenuItem>
-                    Products
-                </MenuItem>
-                <MenuItem>
-                    Cart
-                </MenuItem>
-            </MenuList>
+            <List
+                component="nav"
+                className={classes.nav}
+            >
+                <ListItem button component={Link} to="/cart" selected={'/' === pathname}>
+                    <ListItemIcon>
+                        <ShoppingCart />
+                    </ListItemIcon>
+                    <ListItemText primary="Cart" />
+                </ListItem>
+                <ListItem button onClick={handleClick}>
+                    <ListItemIcon>
+                        <AddShoppingCart />
+                    </ListItemIcon>
+                    <ListItemText primary="Products" />
+                    {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem button component={Link} to="/books" selected={'/books' === pathname} className={classes.nested}>
+                            <ListItemIcon>
+                                <LibraryBooks />
+                            </ListItemIcon>
+                            <ListItemText primary="Books" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/music" selected={'/music' === pathname} className={classes.nested}>
+                            <ListItemIcon>
+                                <LibraryMusic />
+                            </ListItemIcon>
+                            <ListItemText primary="Music" />
+                        </ListItem>
+                    </List>
+                </Collapse>
+            </List>
         </div>
     );
 
@@ -136,7 +175,9 @@ export default function ResponsiveDrawer(props) {
 }
 
 ResponsiveDrawer.propTypes = {
-    // Injected by the documentation to work in an iframe.
-    // You won't need it on your project.
     container: PropTypes.object,
 };
+
+export default compose(
+    withRouter,
+)(ResponsiveDrawer);
