@@ -87,6 +87,24 @@ function ResponsiveDrawer(props) {
                     </ListItemIcon>
                     <ListItemText primary="Cart" />
                 </ListItem>
+                <ListItem button component={Link} to="/flights" selected={'/flights' === pathname}>
+                    <ListItemIcon>
+                        <ShoppingCartOutlined />
+                    </ListItemIcon>
+                    <ListItemText primary="Flights" />
+                </ListItem>
+                <ListItem button component={Link} to="/rooms" selected={'/rooms' === pathname}>
+                    <ListItemIcon>
+                        <ShoppingCartOutlined />
+                    </ListItemIcon>
+                    <ListItemText primary="Rooms" />
+                </ListItem>
+                <ListItem button component={Link} to="/hotels" selected={'/hotels' === pathname}>
+                    <ListItemIcon>
+                        <ShoppingCartOutlined />
+                    </ListItemIcon>
+                    <ListItemText primary="Hotels" />
+                </ListItem>
                 <ListItem button onClick={handleClick}>
                     <ListItemIcon>
                         <AddShoppingCartOutlined />

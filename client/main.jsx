@@ -9,7 +9,10 @@ import CartContainer from "../imports/ui/CartContainer";
 import Products from "../imports/ui/Products";
 import BooksContainer from "../imports/ui/BooksContainer";
 import MusicContainer from "../imports/ui/MusicContainer";
-import Layout from "../imports/ui/components/Layouts/AdminLayout";
+import Layout from "../imports/ui/adminLayout/AdminLayout";
+import Hotels from "../imports/ui/adminContainer/HotelsContainer";
+import Flights from "../imports/ui/adminContainer/FlightsContainer";
+import Rooms from "../imports/ui/adminContainer/RoomsContainer";
 import PageNotFound from "../imports/ui/components/PageNotFoundComponent";
 
 Meteor.startup(() => {
@@ -21,6 +24,9 @@ Meteor.startup(() => {
                   <Route  path="/products" component={Products}/>
                   <Route  path="/books" component={BooksContainer}/>
                   <Route  path="/music" component={MusicContainer}/>
+                  <Route  path="/hotels" component={Hotels}/>
+                  <Route  path="/rooms" component={Rooms}/>
+                  <Route  path="/flights" component={Flights}/>
                   <Route component={PageNotFound} />
               </Switch>
           </Layout>
