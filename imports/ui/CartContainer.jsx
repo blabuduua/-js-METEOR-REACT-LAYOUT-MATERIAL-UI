@@ -12,8 +12,21 @@ class Cart extends Component {
    this.onChangeQuantity = this.onChangeQuantity.bind(this);
 
    this.state = {
-    totalCount: 0
-   }
+    totalCount: 0,
+    isAuthenticated: Meteor.userId() !== null,
+   };
+ }
+
+ componentWillMount(){
+  if (!this.state.isAuthenticated) {
+   this.props.history.push('/login');
+  }
+ }
+
+ componentDidUpdate(prevProps, prevState){
+  if (!this.state.isAuthenticated) {
+   this.props.history.push('/login');
+  }
  }
 
  onChangeQuantity(id, event) {

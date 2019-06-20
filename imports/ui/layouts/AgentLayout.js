@@ -7,6 +7,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import MailOutline from '@material-ui/icons/MailOutline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -17,12 +18,16 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { compose } from "recompose";
+import Button from "@material-ui/core/Button";
+import Badge from "@material-ui/core/Badge";
+import Grid from "@material-ui/core/Grid";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
+        flexGrow: 1,
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
@@ -55,10 +60,13 @@ const useStyles = makeStyles(theme => ({
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
+    title: {
+        lineHeight: 'unset',
+    },
 }));
 
 function ResponsiveDrawer(props) {
-    const { container, children, location: {pathname} } = props;
+    const { container, children, location: {pathname}, history } = props;
     const classes = useStyles();
     const theme = useTheme();
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -70,6 +78,17 @@ function ResponsiveDrawer(props) {
 
     function handleClick() {
         setOpen(!open);
+    }
+
+    function logout(e){
+        e.preventDefault();
+        Meteor.logout( (err) => {
+            if (err) {
+                console.log( err.reason );
+            } else {
+                history.push('/login');
+            }
+        });
     }
 
     const drawer = (
@@ -86,24 +105,6 @@ function ResponsiveDrawer(props) {
                         <ShoppingCartOutlined />
                     </ListItemIcon>
                     <ListItemText primary="Cart" />
-                </ListItem>
-                <ListItem button component={Link} to="/flights" selected={'/flights' === pathname}>
-                    <ListItemIcon>
-                        <ShoppingCartOutlined />
-                    </ListItemIcon>
-                    <ListItemText primary="Flights" />
-                </ListItem>
-                <ListItem button component={Link} to="/rooms" selected={'/rooms' === pathname}>
-                    <ListItemIcon>
-                        <ShoppingCartOutlined />
-                    </ListItemIcon>
-                    <ListItemText primary="Rooms" />
-                </ListItem>
-                <ListItem button component={Link} to="/hotels" selected={'/hotels' === pathname}>
-                    <ListItemIcon>
-                        <ShoppingCartOutlined />
-                    </ListItemIcon>
-                    <ListItemText primary="Hotels" />
                 </ListItem>
                 <ListItem button onClick={handleClick}>
                     <ListItemIcon>
@@ -138,19 +139,30 @@ function ResponsiveDrawer(props) {
                 <CssBaseline />
                 <AppBar position="fixed" color="primary" className={classes.appBar}>
                     <Toolbar>
-                        <IconButton
-                            color="inherit"
-                            aria-label="Open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            className={classes.menuButton}
-                        >
+                        <Grid justify="space-between" container>
+                            <IconButton
+                                color="inherit"
+                                aria-label="Open drawer"
+                                edge="start"
+                                onClick={handleDrawerToggle}
+                                className={classes.menuButton}
+                            >
                             <MenuIcon />
-                        </IconButton>
-                        <Typography variant="h6" noWrap>
-                            Help & Care
-                        </Typography>
+                            </IconButton>
+                                <Typography variant="h4" noWrap className={classes.title}>
+                                Help & Care
+                            </Typography>
+                            <div>
+                                <IconButton aria-label="Show 17 new notifications" color="inherit">
+                                    <Badge badgeContent={17} color="secondary">
+                                        <MailOutline />
+                                    </Badge>
+                                </IconButton>
+                                <Button onClick={logout} color="inherit">Logout</Button>
+                            </div>
+                        </Grid>
                     </Toolbar>
+
                 </AppBar>
                 <nav className={classes.drawer} aria-label="Mailbox folders">
                     {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
