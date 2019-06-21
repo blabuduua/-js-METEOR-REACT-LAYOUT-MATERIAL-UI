@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
 
 export default class SignupPage extends Component {
@@ -17,7 +17,11 @@ export default class SignupPage extends Component {
         let email = document.getElementById("signup-email").value;
         let password = document.getElementById("signup-password").value;
         this.setState({error: "test"});
-        Accounts.createUser({email: email, username: name, password: password}, (err) => {
+        Accounts.createUser({
+            email: email,
+            username: name,
+            password: password,
+        }, (err) => {
             if(err){
                 this.setState({
                     error: err.reason
@@ -30,6 +34,7 @@ export default class SignupPage extends Component {
 
     render(){
         const error = this.state.error;
+
         return (
             <div className="modal show">
                 <div className="modal-dialog">
@@ -57,6 +62,7 @@ export default class SignupPage extends Component {
                                            className="form-control input-lg"
                                            placeholder="password"/>
                                 </div>
+
                                 <div className="form-group">
                                     <input type="submit" id="login-button"
                                            className="btn btn-lg btn-primary btn-block"
